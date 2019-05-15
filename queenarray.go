@@ -120,13 +120,3 @@ func (c queen) move(xnew_position,ynew_position int,B board){
 func (c queen) shoot(xposition int,yposition int,B board){
 
 }
-/*//game class	return true
-}
-func (c queen) move(xnew_position,ynew_position int,B board){
-	for !c.occupied(xnew_position,ynew_position , B) && c.canmove(xnew_position,ynew_position , B){
-
-	}
-}
-func (c queen) shoot(xposition int,yposition int,B board){
-
-}
