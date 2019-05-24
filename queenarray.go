@@ -1,122 +1,159 @@
-package main
-import "fmt"
-type board [][] string
-type queen struct{
-	current_xpos int
-	current_ypos int
+package golibrary
+
+type Board [6][6] string
+type Queen struct{
+	Name string
+	Current_xpos int
+	Current_ypos int
+	
 }
-func (c queen) occupied(xnew_position,ynew_position int,B board) bool{
-	fmt.Printf("")
-	if B[xnew_position][ynew_position]!="a"{//.TrimRight(B[xnew_position][ynew_position], "\n") != "a"{
-		return true
+func (c Queen) Occupied(xnew_position,ynew_position int,B Board) bool{
+	var result=true
+	
+	if (B[xnew_position][ynew_position]!="em"){
+		result = true
 	}else{
-		return false
+		result = false
 	}
+	return result
 }
 
-func (c queen) canmove(xnew_position,ynew_position int,B board) bool{
+func (c Queen) Canmove(xnew_position,ynew_position int,B Board) bool{
 	
 	var x,y,cx,cy int
 	x=xnew_position
 	y=ynew_position
-	cx=c.current_xpos 
-	cy=c.current_ypos 
-
+	cx=c.Current_xpos 
+	cy=c.Current_ypos 
+	B[cx][cy]="em"
+	
 	var result bool
 
 	result=false
 
 	//8 cases for 8 directions
 	//top right
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x+1
-		y=y+1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
+	
+	if(cx<6&&cy<6&&x<6&&y<6){
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x+1
+			y=y+1
+		}
+		//fmt.Println(result,x,y)
+		//right
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x+1
+			y=y+0
+		}
+		//bottom right
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x+1
+			y=y-1
+		}
+		//bottom
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x+0
+			y=y-1
+		}
+		//bottom left
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x-1
+			y=y-1
+		}
+		//left
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x-1
+			y=y+0
+		}
+		//top left
+		x=xnew_position
+		y=ynew_position
+		for ((x<=5&&y<=5&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x-1
+			y=y+1
+		}
+		//up
+		x=xnew_position
+		y=ynew_position
+		for ((x<6&&y<6&&x>=0&&y>=0)&&(!c.Occupied(x,y,B))){
+			
+			if(!c.Occupied(x,y,B)&&(x==cx&&y==cy)){
+				result=true
+			}
+			x=x+0
+			y=y+1
 		}
 	}
-	//right
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x+1
-		y=y+0
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
+	if(c.Current_xpos==xnew_position&&c.Current_ypos==ynew_position){
+		result = false
 	}
-	//bottom right
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x+1
-		y=y-1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
-	//bottom
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x+0
-		y=y-1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
-	//bottom left
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x-1
-		y=y-1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
-	//left
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x-1
-		y=y+0
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
-	//top left
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x-1
-		y=y+1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
-	//up
-	for (x!=cx&&y!=cy)&&(x<6&&y<6){
-		x=x+0
-		y=y+1
-		if(!c.occupied(x,y,B)){
-			result=true
-		}else{
-			result=false
-		}
-	}
+	
+	
 	return result
 }
 
-func (c queen) move(xnew_position,ynew_position int,B board){
-	for !c.occupied(xnew_position,ynew_position , B) && c.canmove(xnew_position,ynew_position , B){
-
+func (c* Queen) Move(xnew_position,ynew_position int,B *Board){
+	
+	
+	if(c.Canmove(xnew_position,ynew_position,*B)){
+		
+		B[xnew_position][ynew_position]=c.Name
+		B[c.Current_xpos][c.Current_ypos]="em"
+		c.Current_xpos=xnew_position
+		c.Current_ypos=ynew_position
+		
 	}
 }
 
 
-func (c queen) shoot(xposition int,yposition int,B board){
-
+func (c *Queen) Shoot(xnew_position int,ynew_position int,B *Board){
+	var p int
+	p=0
+	if(c.Canmove(xnew_position,ynew_position,*B)){
+		p=1
+		
+	}
+	if(p==1){
+		
+		B[xnew_position][ynew_position]="xx"
+		
+	}
 }
