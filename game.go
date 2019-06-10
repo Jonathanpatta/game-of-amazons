@@ -40,6 +40,42 @@ func game_finished(p11,p12,p21,p22 golibrary.Queen,B golibrary.Board) int{
 	}
 	return res
 }
+func AI_choose(p,p1 *golibrary.Queen,B *golibrary.Board)int{
+	if(noofmoves(*p,*B)==0){
+		return 2
+	}else{
+		return 1
+	}
+}
+func AI_moves(p *golibrary.Queen,B *golibrary.Board){
+	xm:=0
+	ym:=0
+	
+	for i:=0;i<6;i++{
+		for j:=0;j<6;j++{
+			if(p.Canmove(i,j,*B)){
+				xm=i
+				ym=j
+				p.Move(xm,ym,B);
+				return
+			}
+		}
+	}
+}
+func AI_shoots(p *golibrary.Queen,B *golibrary.Board){
+	var xm,ym int
+	
+	for i:=0;i<6;i++{
+		for j:=0;j<6;j++{
+			if(p.Canmove(i,j,*B)){
+				xm=i
+				ym=j
+				p.Shoot(xm,ym,B);
+				return
+			}
+		}
+	}
+}
 func initialize(){
 	for i:=0;i<6;i++{
 		for j:=0;j<6;j++{
@@ -61,6 +97,7 @@ func show(){
 		fmt.Printf("\n\n\n")
 	}
 }
+
 func main(){
 	
 	var p[4] golibrary.Queen
@@ -190,9 +227,23 @@ func main(){
 			}
 			turn=2
 		}else{
-			var xm,ym,xs,ys int
-			fmt.Println("player 2's turn")
-			fmt.Println("enter which piece")
+			//var xm,ym,xs,ys int
+			fmt.Println("AI's turn")
+			pawn := AI_choose(&p[2],&p[3],&board1);
+			if(pawn==1){
+				AI_moves(&p[2],&board1);
+			}else{
+				AI_moves(&p[3],&board1);
+			}
+			if(pawn==1){
+				AI_shoots(&p[2],&board1);
+			}else{
+				AI_shoots(&p[3],&board1);
+			}
+			
+			show();
+			
+			/*fmt.Println("enter which piece")
 			fmt.Println("1 to play with s1")
 			fmt.Println("2 to play with s2")
 			ch := 0
@@ -306,7 +357,7 @@ func main(){
 				}
 				p[3].Shoot(xs,ys,&board1);
 				show();
-			}
+			}*/
 			turn=1
 
 		}
